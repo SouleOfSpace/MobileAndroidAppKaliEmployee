@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.subInfo.WorkInfoFragment">
+
+    <GridLayout
+        android:id="@+id/info_grid_about_me"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/profile_title"
+        android:columnCount="2"
+        android:gravity="center"
+        android:padding="15dp"
+        android:rowCount="12"
+        >
+
+        <ImageView
+            android:layout_row="0"
+            android:layout_column="0"
+            android:layout_columnWeight="0.15"
+
+            android:src="@drawable/ic_profile_account_circle_24" />
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="start"
+            android:text="Контракт"
+
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="1"
+            android:layout_column="1"
+
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+
+            android:text="Начало действия контракта"
+            android:textSize="16sp"
+
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/start_contract"
+            android:layout_width="270dp"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+
+            android:text="13.05.2020"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="3"
+            android:layout_column="1"
+
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginBottom="5dp"
+            android:text="Окончание действия контракта"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/finish_contract"
+            android:layout_width="270dp"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:text="13.05.2026"
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="5"
+            android:layout_column="1"
+
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginBottom="5dp"
+            android:text="Разряд"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/razryad"
+            android:layout_width="270dp"
+            android:layout_row="6"
+            android:layout_column="1"
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:text="5"
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:layout_row="7"
+            android:layout_column="0"
+            android:layout_columnWeight="0.15"
+
+            android:layout_gravity="center"
+            android:src="@drawable/ic_family_24" />
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="7"
+            android:layout_column="1"
+
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+
+            android:text="Нарушения"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="8"
+            android:layout_column="1"
+
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginBottom="5dp"
+            android:text="Дата"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/about_me_family_status"
+            android:layout_width="270dp"
+            android:layout_row="9"
+            android:layout_column="1"
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:text="03.06.2021"
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="270dp"
+            android:layout_row="10"
+            android:layout_column="1"
+
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:layout_marginTop="10dp"
+
+            android:layout_marginBottom="5dp"
+            android:text="Причина"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <TextView
+            android:id="@+id/about_me_kids"
+            android:layout_width="270dp"
+            android:layout_row="11"
+            android:layout_column="1"
+            android:layout_columnWeight="0.95"
+            android:layout_gravity="start"
+            android:text="Недисциплинированность"
+
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+    </GridLayout>
+
+</FrameLayout>

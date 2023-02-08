@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_menu"
+    tools:context=".ui.profile.ProfileFragment">
+
+    <LinearLayout
+        android:id="@+id/liner_layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/title_profile_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="ПРОФИЛЬ"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
+
+            android:paddingLeft="10dp"
+            />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintTop_toBottomOf="@id/liner_layout_title"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_photo"
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:src="@drawable/bg_menu"
+                app:civ_border_width="2dp"
+                app:civ_border_color="@color/textHint"
+                android:layout_margin="15dp"
+                android:layout_gravity="center"
+                />
+
+            <GridLayout
+                android:id="@+id/grid_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/profile_title"
+
+                android:columnCount="2"
+                android:elevation="15dp"
+                android:padding="10dp"
+                android:rowCount="3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_row="0"
+                    android:layout_columnSpan="2"
+
+                    android:text="Volosevich Alexandr Sergeevich"
+                    android:textAlignment="center"
+                    android:textColor="@color/purple_700"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/constant_title_birthday"
+                    android:layout_row="1"
+                    android:layout_column="0"
+
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="@string/birthday"
+                    android:textSize="16sp"
+ />
+
+                <TextView
+                    android:id="@+id/constant_title_contact"
+                    android:layout_row="1"
+                    android:layout_column="1"
+
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="@string/data_contract"
+                    android:textSize="16sp"
+ />
+
+                <TextView
+                    android:id="@+id/birthday_title"
+                    android:layout_row="2"
+                    android:layout_column="0"
+
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="13.05.1999"
+                    android:textSize="16sp"
+ />
+
+                <TextView
+                    android:id="@+id/contract_title"
+                    android:layout_row="2"
+                    android:layout_column="1"
+
+                    android:layout_columnWeight="1"
+                    android:gravity="center"
+                    android:text="26.08.2026"
+                    android:textSize="16sp"
+ />
+
+            </GridLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/sub_info"
+
+                android:padding="20dp"
+                app:layout_constraintTop_toBottomOf="@id/grid_layout"
+                tools:context=".ui.profile.ProfileFragment">
+
+                <ScrollView
+                    android:id="@+id/scroll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <HorizontalScrollView
+                        android:id="@+id/hscroll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:id="@+id/linner_inner_scroll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/btn_main_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/btn_of_profiles"
+
+                                android:text="Основная информация"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"/>
+
+                            <TextView
+                                android:id="@+id/btn_about_me"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+
+                                android:background="@drawable/btn_of_profiles"
+
+                                android:text="Обо мне"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"/>
+
+                            <TextView
+                                android:id="@+id/btn_working_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="20dp"
+
+                                android:background="@drawable/btn_of_profiles"
+
+                                android:text="Рабочая информация"
+                                android:textColor="@color/white"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
+                    </HorizontalScrollView>
+                </ScrollView>
+
+                <fragment
+                    android:id="@+id/fragment_profile_container_sub_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:name="com.example.kalidigitalemployee.ui.profile.subInfo.BasicInfoFragment"
+                    app:layout_constraintTop_toBottomOf="@id/scroll"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    tools:layout="@layout/fragment_basic_info"/>
+
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

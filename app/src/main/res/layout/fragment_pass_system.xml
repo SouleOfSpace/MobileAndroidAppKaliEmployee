@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_pass_system"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.services.components.ServicesPassSystemFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp"
+        android:background="@color/sub_info"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btn_next_fragment_pass_system"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_btn_next_24" />
+
+            <!-- TODO: Update blank fragment layout -->
+            <TextView
+                android:id="@+id/title_fragment_pass_system"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+
+                android:layout_weight="2"
+                android:gravity="center_vertical"
+                android:text="Пропускная система"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/btn_pass_system_calendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_calendar_24" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/liner_layout_stuck_days_layouts"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal">
+
+
+            <LinearLayout
+                android:id="@+id/linerLayoutWithDates"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/purple_500"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/fragment_pass_system_day_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+
+                    android:text="01"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/fragment_pass_system_day_of_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
+
+                    android:text="ВС"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

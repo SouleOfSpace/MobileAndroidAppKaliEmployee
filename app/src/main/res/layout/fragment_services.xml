@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.services.ServicesFragment">
+
+    <LinearLayout
+        android:id="@+id/liner_layout_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:background="@color/white"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/title_profile_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Сервисы"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
+
+            android:paddingLeft="10dp"
+            />
+    </LinearLayout>
+
+    <GridLayout
+        android:id="@+id/services_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="8"
+        android:columnCount="2"
+        android:background="@color/sub_info"
+        android:orientation="vertical"
+
+        android:layout_marginTop="60dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+
+        app:layout_constraintTop_toBottomOf="@id/liner_layout_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
+        <TextView
+            android:layout_height="45dp"
+            android:layout_column="0"
+            android:layout_row="0"
+
+            android:text="Контроль"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_pass_sistem"
+            android:layout_width="185dp"
+            android:layout_height="45dp"
+            android:layout_column="0"
+            android:layout_row="1"
+
+            android:layout_gravity="top|left"
+            app:cardCornerRadius="4dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="5dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/service_pass_sistem"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/textHint"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="15dp"
+                    />
+
+                <TextView
+                    android:id="@+id/title_pass_sistem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Пропускная система"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_tabel"
+            android:layout_width="185dp"
+            android:layout_height="45dp"
+            android:layout_row="1"
+            android:layout_column="1"
+
+            android:layout_gravity="top|right"
+            app:cardCornerRadius="4dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="10dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/service_pass_sistem"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/textHint"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Табель"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_medical"
+            android:layout_width="185dp"
+            android:layout_height="45dp"
+            android:layout_row="2"
+            android:layout_column="0"
+
+            android:layout_gravity="start"
+            app:cardCornerRadius="4dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="5dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/service_pass_sistem"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/textHint"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Больничные"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:layout_height="45dp"
+            android:layout_column="0"
+            android:layout_row="3"
+
+            android:text="Расчетный лист"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+
+            android:gravity="center_vertical"
+            android:layout_marginBottom="10dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_salary"
+            android:layout_width="185dp"
+            android:layout_height="45dp"
+            android:layout_row="4"
+            android:layout_column="0"
+
+            android:layout_gravity="start"
+            app:cardCornerRadius="4dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="5dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/service_pass_sistem"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/textHint"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Расчетный лист"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:layout_column="0"
+            android:layout_row="5"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+
+            android:text="Личная карточка"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+
+            android:layout_marginBottom="10dp"
+            />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_clothes"
+            android:layout_width="185dp"
+            android:layout_height="45dp"
+            android:layout_row="6"
+            android:layout_column="0"
+
+            android:layout_gravity="start"
+            app:cardCornerRadius="4dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="5dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="5dp"
+                android:orientation="horizontal"
+
+                >
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/service_pass_sistem"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/textHint"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Спецодежда"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_tools"
+            android:layout_width="185dp"
+            android:layout_height="45dp"
+            android:layout_row="6"
+            android:layout_column="1"
+
+            android:layout_gravity="start"
+            app:cardCornerRadius="4dp"
+            android:elevation="5dp"
+            android:layout_marginBottom="10dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:padding="5dp"
+                android:orientation="horizontal">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/service_pass_sistem"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/textHint"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginEnd="15dp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:text="Инструмент / инвентарь"
+                    android:textSize="14sp"
+                    android:textColor="@color/black"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </GridLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
