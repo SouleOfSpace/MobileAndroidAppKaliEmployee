@@ -1,20 +1,27 @@
 package com.example.kalidigitalemployee;
 
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import com.google.android.gms.common.api.Response;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
 
+public class MainActivity extends AppCompatActivity {
     TextView mainText;
     Button btnLogin, btnRegister;
     FirebaseAuth auth;
@@ -47,6 +54,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), Login.class));
             }
         });
+
+
     }
 
+    private void enterWithJwt() {
+        String token = readTokenFromStorage();
+
+
+    }
+
+    public String readTokenFromStorage() {
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        String tokenFromsStorage = sharedPreferences.getString("AccessToken", "");
+        return tokenFromsStorage;
+    }
 }

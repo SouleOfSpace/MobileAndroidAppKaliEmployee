@@ -23,7 +23,7 @@
         />
 
     <EditText
-        android:id="@+id/fullname"
+        android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
@@ -51,7 +51,7 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fullname"
+        app:layout_constraintTop_toBottomOf="@id/username"
         />
 
     <EditText
@@ -70,11 +70,11 @@
         />
 
     <EditText
-        android:id="@+id/phone"
+        android:id="@+id/number_of_passport"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:hint="@string/phone"
+        android:hint="@string/number_of_passport"
         android:textColorHint="@color/textHint"
         android:inputType="text"
         android:layout_margin="20dp"
@@ -100,7 +100,7 @@
 
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phone"
+            app:layout_constraintTop_toBottomOf="@id/number_of_passport"
             />
 
     <TextView

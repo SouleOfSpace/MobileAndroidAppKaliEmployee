@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.services.components.search.SearchFragment">
+    tools:context=".ui.search.SearchFragment">
 
     <TextView
         android:id="@+id/text_search"
@@ -23,8 +23,11 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:layout_editor_absoluteX="72dp"
-        tools:layout_editor_absoluteY="16dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
 
         <SearchView
             android:id="@+id/simpleSearchView"
@@ -38,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <ListView
-                android:id="@+id/listview"
+                android:id="@+id/listview_search"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
         </ScrollView>

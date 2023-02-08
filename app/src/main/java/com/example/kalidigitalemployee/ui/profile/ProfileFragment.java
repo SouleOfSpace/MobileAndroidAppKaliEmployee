@@ -1,16 +1,17 @@
 package com.example.kalidigitalemployee.ui.profile;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -19,31 +20,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
 import com.example.kalidigitalemployee.R;
-import com.example.kalidigitalemployee.databinding.FragmentProfileBinding;
 import com.example.kalidigitalemployee.retrofit.ApiIterface;
+import com.example.kalidigitalemployee.retrofit.Contract;
+import com.example.kalidigitalemployee.retrofit.Profile;
 import com.example.kalidigitalemployee.retrofit.RetrofitClient;
 import com.example.kalidigitalemployee.retrofit.User;
 import com.example.kalidigitalemployee.ui.profile.subInfo.AboutMeFragment;
 import com.example.kalidigitalemployee.ui.profile.subInfo.BasicInfoFragment;
 import com.example.kalidigitalemployee.ui.profile.subInfo.WorkInfoFragment;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.gson.Gson;
 
-import org.apache.commons.io.IOUtils;
+import java.util.List;
 
-import java.io.IOException;
-import java.io.StringWriter;
 
 public class ProfileFragment extends Fragment{
 
-    TextView mBasicInfo, mAboutMe, mWorkInfo;
-    FirebaseAuth mAuth;
-    FirebaseUser mUser;
-    FirebaseDatabase db;
+    private TextView mBasicInfo, mAboutMe, mWorkInfo, mProfileName,
+    mBirthday, mContractFinish;
+    private Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+    private ApiIterface apiIterface = retrofit.create(ApiIterface.class);
 
     public ProfileFragment(){
 
@@ -56,16 +51,9 @@ public class ProfileFragment extends Fragment{
         mBasicInfo = (TextView) v.findViewById(R.id.btn_main_info);
         mAboutMe = (TextView) v.findViewById(R.id.btn_about_me);
         mWorkInfo = (TextView) v.findViewById(R.id.btn_working_info);
-
-        mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-
-        if (mUser != null) {
-            Log.d("USER CUR", mUser.getEmail());
-//            Log.d("USER CUR", mUser.getPhoneNumber());
-            sendPosReques();
-        }
-
+        mProfileName = (TextView) v.findViewById(R.id.profile_name);
+        mBirthday = (TextView) v.findViewById(R.id.birthday_title);
+        mContractFinish = (TextView) v.findViewById(R.id.contract_title);
 
         mBasicInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,6 +67,7 @@ public class ProfileFragment extends Fragment{
                 fragmentTransaction.commit();
             }
         });
+        mBasicInfo.getLinksClickable();
 
         mAboutMe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +95,9 @@ public class ProfileFragment extends Fragment{
             }
         });
 
+        getCurrnetProfile("Bearer " + readAccessTokenFromStorage());
+        getCurrentContract("Bearer " + readAccessTokenFromStorage());
+
         return v;
     }
 
@@ -127,84 +119,67 @@ public class ProfileFragment extends Fragment{
         }
     }
 
-    private void sendPosReques(){
-        ApiIterface apiIterface = RetrofitClient.getRetrofitInstance().create(ApiIterface.class);
-        Call<com.example.kalidigitalemployee.retrofit.User> call = apiIterface.getUserInformation("Id", "username", "email", "date_joined");
-        call.enqueue(new Callback<User>() {
+    private void getCurrnetProfile(String accessToken) {
+        Call<Profile> call = apiIterface.getCurrentProfile(accessToken, "application/json");
+        call.enqueue(new Callback<Profile>() {
             @Override
-            public void onResponse(Call<com.example.kalidigitalemployee.retrofit.User> call, Response<User> response) {
-                Log.e("TAG RESPONSE","OnResponse" + response.code());
-                Log.e("TAG RESPONSE", "Id: " + response.body().getId());
-                Log.e("TAG RESPONSE", "Username: " + response.body().getUsername());
-                Log.e("TAG RESPONSE", "Email: " + response.body().getEmail());
-                Log.e("TAG RESPONSE", "Date joined" + response.body().getDate_joined());
-            }
+            public void onResponse(Call<Profile> call, Response<Profile> response) {
+                if (!checkResponse(response.isSuccessful(), response.code())) return;
 
+                Profile profile = response.body();
+                setFullName(profile.getLastname(), profile.getFirstname(), profile.getSurname());
+                setBirthday(profile.getBirthday());
+                return;
+            }
             @Override
-            public void onFailure(Call<com.example.kalidigitalemployee.retrofit.User> call, Throwable t) {
-                Log.e("TAG RESPONSE", "onFailure: " + t.getMessage());
+            public void onFailure(Call<Profile> call, Throwable t) {
+                return;
             }
         });
     }
 
-//    @Override
-//    public void onClick(View v){
-//        if (v == mBasicInfo){
-//            BasicInfoFragment basicInfoFragment = new BasicInfoFragment();
-//            fragmentTransaction.replace(R.id.fragment_profile_container_sub_info, basicInfoFragment);
-//            fragmentTransaction.commit();
-//            Log.d("BUTTON BASIC INFO", "TRUE TRUE");
-//        } else if (v == mAboutMe){
-//            AboutMeFragment aboutMeFragment = new AboutMeFragment();
-//            fragmentTransaction.replace(R.id.fragment_profile_container_sub_info, aboutMeFragment);
-//            fragmentTransaction.commit();
-//        }
-//    }
+    private void getCurrentContract(String acceessToken) {
+        Call<Contract> call = apiIterface.getCurrentContract(acceessToken, "application/json");
+        call.enqueue(new Callback<Contract>() {
+            @Override
+            public void onResponse(Call<Contract> call, Response<Contract> response) {
+                if (!checkResponse(response.isSuccessful(), response.code())) return;
+
+                Contract contract = response.body();
+                setContractFinish(contract.getFinish_time());
+                return;
+            }
+
+            @Override
+            public void onFailure(Call<Contract> call, Throwable t) {
+                return;
+            }
+        });
+    }
+
+    private String readAccessTokenFromStorage() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("tokenStorage", Context.MODE_PRIVATE);
+        String tokenFromsStorage = sharedPreferences.getString("AccessToken", "");
+        return tokenFromsStorage;
+    }
+
+    private Boolean checkResponse(Boolean flag, Integer code){
+        if(! flag){
+            Log.e("TAG RESPONSE1", "respunse unsuccess: " + code);
+            return false;
+        }
+        return true;
+    }
+
+    private void setFullName(String lastname, String firstname, String surname){
+        mProfileName.setText(lastname + " " + firstname + " " + surname);
+    }
+
+    private void setBirthday(String birthday){
+        mBirthday.setText(birthday);
+    }
+
+    private void setContractFinish(String contract){
+        mContractFinish.setText(contract);
+    }
 }
-
-
-class UserProfile {
-    private String username;
-    private String phone;
-    private String firstName;
-    private String lastName;
-
-}
-interface IUserProfile {
-
-    UserProfile saveUserProfile(UserProfile profile);
-    UserProfile getUserProfile(String username);
-}
-
-//class UserProfileImpl implements IUserProfile {
-//
-//
-//
-//    @Override
-//    public UserProfile saveUserProfile(UserProfile profile) {
-//        HttpClient client = new DefaultHttpClient();
-//        HttpGet request = new HttpGet("http://restUrl");
-//        try {
-//            HttpResponse response = client.execute(request);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return null;
-//    }
-//
-//    @Override
-//    public UserProfile getUserProfile(String username) {
-//        HttpClient client = new DefaultHttpClient();
-//        HttpGet request = new HttpGet("http://localhost:8080/users/profile");
-//        try {
-//            Gson gson = new Gson();
-//            HttpResponse response = client.execute(request);
-//            String profileJson = IOUtils.toString(response.getEntity().getContent(), "utf-8");
-//            return gson.fromJson(profileJson, UserProfile.class);
-//        } catch (IOException e) {
-//            throw new RuntimeException("Profile wasn't found");
-//        }
-//
-//    }
-//}

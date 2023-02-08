@@ -1,23 +1,32 @@
 package com.example.kalidigitalemployee.retrofit;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 public class User {
-    private String id;
+
+    @SerializedName("password")
+    @Expose
+    private String password;
+    @SerializedName("email")
+    @Expose
     private String email;
+    @SerializedName("username")
+    @Expose
     private String username;
 
-    public User(String id, String email, String username, String date_joined) {
-        this.id = id;
+    public User(String password, String email, String username) {
+        this.password = password;
         this.email = email;
         this.username = username;
-        this.date_joined = date_joined;
     }
 
-    public String getId() {
-        return id;
+    public String getPassword() {
+        return password;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getEmail() {
@@ -35,16 +44,6 @@ public class User {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getDate_joined() {
-        return date_joined;
-    }
-
-    public void setDate_joined(String date_joined) {
-        this.date_joined = date_joined;
-    }
-
-    private String date_joined;
 
 
 }

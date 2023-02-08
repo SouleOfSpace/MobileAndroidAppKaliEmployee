@@ -42,7 +42,6 @@
             android:layout_column="1"
             android:layout_columnWeight="0.95"
             android:layout_gravity="start"
-            android:text="421496"
 
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -63,14 +62,13 @@
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/profession"
+            android:id="@+id/workpost"
             android:layout_width="270dp"
             android:layout_row="3"
             android:layout_column="1"
             android:layout_columnWeight="0.95"
             android:layout_gravity="start"
 
-            android:text="Электрослесарь (слесарь) дежурный и по ремонту оборудования подземный"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -89,13 +87,12 @@
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/worktopic"
+            android:id="@+id/workplace"
             android:layout_width="270dp"
             android:layout_row="5"
             android:layout_column="1"
             android:layout_columnWeight="0.95"
             android:layout_gravity="start"
-            android:text="БРИГАДА №2"
 
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -123,13 +120,12 @@
             android:textStyle="normal" />
 
         <TextView
-            android:id="@+id/workplace"
+            android:id="@+id/address"
             android:layout_width="270dp"
             android:layout_row="7"
             android:layout_column="1"
             android:layout_columnWeight="0.95"
             android:layout_gravity="start"
-            android:text="Нет данных"
 
             android:textSize="16sp"
             android:textStyle="bold" />

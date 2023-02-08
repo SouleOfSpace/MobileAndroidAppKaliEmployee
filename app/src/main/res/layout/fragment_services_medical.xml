@@ -40,6 +40,23 @@
                 />
 
         </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scroll_medical_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/layout_medical_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_gravity="start"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 </FrameLayout>

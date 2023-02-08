@@ -1,7 +1,11 @@
 package com.example.kalidigitalemployee;
 
 
+import static android.preference.PreferenceManager.getDefaultSharedPreferences;
+
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -12,15 +16,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.example.kalidigitalemployee.retrofit.ApiIterface;
+import com.example.kalidigitalemployee.retrofit.RetrofitClient;
+import com.example.kalidigitalemployee.retrofit.Token;
+import com.example.kalidigitalemployee.retrofit.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class Login extends AppCompatActivity {
 
@@ -28,47 +40,27 @@ public class Login extends AppCompatActivity {
     Button mLoginBtn;
     TextView mCreateText;
     ProgressBar progressBar;
-    FirebaseAuth mAuth;
-    FirebaseAuth.AuthStateListener mAuthListener;
-    FirebaseUser mUser;
     String email, password;
-    public static final String userEmail="";
 
-    public static final String TAG="LOGIN";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         mLoginBtn = (Button) findViewById(R.id.loginBtn);
-
         mCreateText = (TextView) findViewById(R.id.createText);
-
         Email = (EditText) findViewById(R.id.email);
         Password = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        mAuth = FirebaseAuth.getInstance();
-        mUser = FirebaseAuth.getInstance().getCurrentUser();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if(mUser!=null){
-                    Intent intent = new Intent(Login.this, MenuActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(intent);
-                }
-                else{
-                    Log.d(TAG, "AuthStateChanged: Logout");
-                }
-            }
-        };
+        checkAccessToken();
 
         //Adding click listener to log in button
         mLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Calling EditText is empty or no method
-                userSign();
+                createToken();
+                progressBar.setVisibility(View.INVISIBLE);
+                checkAccessToken();
             }
         });
 
@@ -82,138 +74,134 @@ public class Login extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-        //removeAuthSateListner is used  in onStart function just for checking purposes,it helps in logging you out
-        mAuth.removeAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop(){
-        super.onStop();
-        mAuth.removeAuthStateListener(mAuthListener);
-    }
+//    @Override
+//    protected void onStart(){
+//        super.onStart();
+//        //removeAuthSateListner is used  in onStart function just for checking purposes,it helps in logging you out
+//        mAuth.removeAuthStateListener(mAuthListener);
+//    }
+//
+//    @Override
+//    protected void onStop(){
+//        super.onStop();
+//        mAuth.removeAuthStateListener(mAuthListener);
+//    }
 
     @Override
     public void onBackPressed() {
         Login.super.finish();
     }
 
-    private void userSign(){
+    private void createToken(){
         email = Email.getText().toString().trim();
         password = Password.getText().toString().trim();
-        if (TextUtils.isEmpty(email)){
-            Toast.makeText(Login.this, "Enter the correct email", Toast.LENGTH_SHORT).show();
-            return;
-        } else if (TextUtils.isEmpty(password)){
-            Toast.makeText(Login.this, "Enter the correct pssword", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        progressBar.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+
+        if (!checkIsNotEmptyEmailField(email))return;
+        else if (!checkIsNotEmptyPasswordField(password)) return;
+
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+        ApiIterface apiIterface = retrofit.create(ApiIterface.class);
+
+        Call<Token> call = apiIterface.getToken(email, password, "admin");
+        call.enqueue(new Callback<Token>() {
             @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (!task.isSuccessful()) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(Login.this, "Login not successfull", Toast.LENGTH_SHORT).show();
-                } else {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    checkIfEmailVerified();
-                }
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                if(!checkServerConnect(response.code())) return;
+
+                Token token = response.body();
+                progressBar.setVisibility(View.VISIBLE);
+
+                if (!validIsToken(token)) return;
+
+                progressBar.setVisibility(View.INVISIBLE);
+
+                Log.d("TOKEN FROM DJANGO", token.getJwtAccess());
+                saveTokenInStorage(token.getJwtAccess());
+                Log.d("TOKEN FROM STORAGE", readTokenFromStorage());
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable t) {
+                Toast.makeText(Login.this, "Data was not sent. Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
             }
         });
     }
 
-    //This function helps in verifying whether the email is verified or not
-    private void checkIfEmailVerified(){
-        FirebaseUser users = FirebaseAuth.getInstance().getCurrentUser();
-        boolean emailVerified = users.isEmailVerified();
-        if (!emailVerified){
-            Toast.makeText(this, "Verify the Email Id", Toast.LENGTH_SHORT).show();
-            mAuth.signOut();
-            finish();
-        }
-        else {
-            Log.d("UNLOG", "FALSE");
-            Email.getText().clear();
-            Password.getText().clear();
-            Intent intent = new Intent(Login.this, MenuActivity.class);
-
-            //Sending Email to MenuActivity using intent
-            intent.putExtra(userEmail, email);
-
-            startActivity(intent);
-        }
+    private void saveTokenInStorage(String token) {
+        SharedPreferences preferences = getSharedPreferences("tokenStorage", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("AccessToken", token);
+        editor.apply();
     }
 
+    private String readTokenFromStorage() {
+        SharedPreferences sharedPreferences = getSharedPreferences("tokenStorage", Context.MODE_PRIVATE);
+        String tokenFromsStorage = sharedPreferences.getString("AccessToken", "");
+        return tokenFromsStorage;
+    }
 
-//    @SuppressLint("MissingInflatedId")
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_login);
-//
-//        mEmail = findViewById(R.id.email);
-//        mPassword = findViewById(R.id.password);
-//        progressBar = findViewById(R.id.progressBar);
-//        mLoginBtn = findViewById(R.id.loginBtn);
-//        mCreateText = findViewById(R.id.createText);
-//        root = findViewById(R.id.root_login);
-//
-//        auth = FirebaseAuth.getInstance();
-//
-//        mCreateText.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), Register.class));
-//            }
-//        });
-//
-//        mLoginBtn.setOnClickListener(this);
-//
-//
-//
-//        mLoginBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                final String email = mEmail.getText().toString();
-//                final String password = mPassword.getText().toString();
-//
-//                if(TextUtils.isEmpty(email)){
-//                    mEmail.setError("Email is required");
-//                    return;
-//                }
-//
-//                if (TextUtils.isEmpty(password)){
-//                    mPassword.setError("Password is required");
-//                    return;
-//                }
-//
-//                if (password.length() < 6){
-//                    mPassword.setError("Password must be >= 6 character");
-//                    return;
-//                }
-//
-//
-//                auth.signInWithEmailAndPassword(email, password)
-//                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//                            @Override
-//                            public void onSuccess(AuthResult authResult) {
-//                                startActivity(new Intent(getApplicationContext(), MenuActivity.class));
-//                                finish();
-//                                progressBar.setVisibility(View.VISIBLE);
-//                            }
-//                        }).addOnFailureListener(new OnFailureListener() {
-//                            @Override
-//                            public void onFailure(@NonNull Exception e) {
-////                                auth.
-//                                Snackbar.make(root, "Error auth" + e.getMessage(), Snackbar.LENGTH_SHORT).show();
-//                                progressBar.setVisibility(View.VISIBLE);
-//                            }
-//                        });
-//
-//            }
-//        });
-//    }
+    private void checkAccessToken(){
+        String token = "Bearer " + readTokenFromStorage();
+        Retrofit retrofit = RetrofitClient.getRetrofitInstance();
+        ApiIterface apiIterface = retrofit.create(ApiIterface.class);
+        Call<User> call = apiIterface.getCurrentUser(token, "application/json");
+
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.code() == 404){
+                    Toast.makeText(Login.this, "Server error", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (response.code() == 200){
+                    Intent intent = new Intent(Login.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                return;
+            }
+        });
+    }
+
+    private Boolean validIsToken(Token token) {
+        if (token.getJwtAccess() == "Email is not right"){
+            Toast.makeText(Login.this, "Email not successfull", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (token.getJwtAccess() == "Password is not right"){
+            Toast.makeText(Login.this, "Password not successfull", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
+    }
+
+    private Boolean checkServerConnect(Integer code){
+        if(code == 404){
+            Toast.makeText(Login.this, "Server error", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean checkIsNotEmptyEmailField(String email){
+        if (TextUtils.isEmpty(email)){
+            Toast.makeText(Login.this, "Enter the correct email", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private Boolean checkIsNotEmptyPasswordField(String password){
+        if (TextUtils.isEmpty(password)){
+            Toast.makeText(Login.this, "Enter the correct password", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
 }

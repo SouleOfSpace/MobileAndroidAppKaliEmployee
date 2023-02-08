@@ -1,6 +1,9 @@
 package com.example.kalidigitalemployee;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -42,7 +45,6 @@ public class MenuActivity extends AppCompatActivity {
                 R.id.navigation_home, R.id.navigation_profile, R.id.navigation_services, R.id.navigation_search)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_menu);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 
