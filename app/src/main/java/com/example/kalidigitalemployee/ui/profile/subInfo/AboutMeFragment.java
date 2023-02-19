@@ -1,25 +1,14 @@
 package com.example.kalidigitalemployee.ui.profile.subInfo;
 
-<<<<<<< HEAD
-=======
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
->>>>>>> f9c8ea5 (Initial commit)
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-<<<<<<< HEAD
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import com.example.kalidigitalemployee.R;
-
-
-public class AboutMeFragment extends Fragment {
-=======
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,26 +32,18 @@ public class AboutMeFragment extends Fragment {
 
     private Retrofit retrofit = RetrofitClient.getRetrofitInstance();
     private ApiIterface apiIterface = retrofit.create(ApiIterface.class);
->>>>>>> f9c8ea5 (Initial commit)
 
     public AboutMeFragment() {
         // Required empty public constructor
     }
 
-<<<<<<< HEAD
-=======
     @SuppressLint("MissingInflatedId")
->>>>>>> f9c8ea5 (Initial commit)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_about_me, container, false);
 
-<<<<<<< HEAD
-        return v;
-    }
-=======
         mFamilyStatus = (TextView) v.findViewById(R.id.about_me_family_status);
         mKids = (TextView) v.findViewById(R.id.about_me_kids);
         mPhone = (TextView) v.findViewById(R.id.about_phone);
@@ -75,11 +56,6 @@ public class AboutMeFragment extends Fragment {
         return v;
     }
 
-    private String readAccessTokenFromStorage() {
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("tokenStorage", Context.MODE_PRIVATE);
-        String tokenFromsStorage = sharedPreferences.getString("AccessToken", "");
-        return tokenFromsStorage;
-    }
 
     private void getCurrnetProfile(String accessToken) {
         Call<Profile> call = apiIterface.getCurrentProfile(accessToken, "application/json");
@@ -155,5 +131,10 @@ public class AboutMeFragment extends Fragment {
         }
         return true;
     }
->>>>>>> f9c8ea5 (Initial commit)
+
+    private String readAccessTokenFromStorage() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("tokenStorage", Context.MODE_PRIVATE);
+        String tokenFromsStorage = sharedPreferences.getString("AccessToken", "");
+        return tokenFromsStorage;
+    }
 }

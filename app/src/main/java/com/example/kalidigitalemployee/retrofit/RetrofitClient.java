@@ -13,23 +13,11 @@ public class RetrofitClient {
     public static Retrofit getRetrofitInstance(){
         if (sRetrofit == null){
             sRetrofit = new Retrofit.Builder()
-                    .baseUrl("https://d24e-37-215-56-32.eu.ngrok.io/")
+                    .baseUrl("https://05c2-37-215-58-96.eu.ngrok.io/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }
 
-        return sRetrofit;
-    }
-
-    public static Retrofit getRetrofitInstanceWithAuthantificate(){
-        if (sRetrofit == null){
-            sRetrofit = new Retrofit.Builder()
-                    .baseUrl("https://e66f-37-215-34-48.eu.ngrok.io/")
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-
-        Log.d("TAG RESPONSE ", sRetrofit.toString());
         return sRetrofit;
     }
 }
